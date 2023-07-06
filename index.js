@@ -2,7 +2,8 @@ const express = require('express');
 const app = express();
 const port = 3001;
 
-
+const bodyParser = require('body-parser');
+app.use(bodyParser.json());
 
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
@@ -19,11 +20,6 @@ app.use((req, res, next) => {
       "img": "https://gymbeam.ua/media/catalog/product/cache/bf5a31e851f50f3ed6850cbbf183db11/p/e/peanut_butter_crunchy_340g.png",
       "name": "Peanut Butter1",
       "taste": ["Crunchy","Smooth"],
-      "count": 4,
-      "size": {
-        "width": 200,
-        "height": 200
-      },
       "weight": ['250g', '300g'],
       "popularity": 5,
       "price": 13.89,
@@ -138,6 +134,18 @@ app.use((req, res, next) => {
   
   
   ];
+
+  app.post('/postproduct', (req, res) => {
+    productList.push(req.body)
+    console.log(req.body)
+    res.json("succes")
+  })
+const checkOutList = []
+  app.post('/checkout', (req, res) => {
+    checkOutList.push(req.body)
+    console.log(req.body)
+    res.json("succes")
+  })
   
   app.get('/pizzas', (req, res) => {
     const id = req.query.category;
