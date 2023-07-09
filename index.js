@@ -135,11 +135,29 @@ app.use((req, res, next) => {
   
   ];
 
-  app.post('/postproduct', (req, res) => {
+  app.post('/product', (req, res) => {
     productList.push(req.body)
     console.log(req.body)
     res.json("succes")
   })
+
+
+  app.delete('/product', (req, res) => {
+    console.info(req.body)
+    const productIndex = productList.findIndex(
+      (product) => product.uniqueId === req.body.uniqueId
+    );
+
+  
+    if (productIndex !== -1) {
+      productList.splice(productIndex, 1);
+      res.status(200).send('Product deleted successfully.');
+    } else {
+      res.status(404).send('Product not found.');
+    }
+  });
+  
+
 const checkOutList = []
   app.post('/checkout', (req, res) => {
     checkOutList.push(req.body)
@@ -148,7 +166,7 @@ const checkOutList = []
   })
 
 
-app.post('/changeList', (req, res) => {
+app.put('/product', (req, res) => {
   const updatedProduct = req.body;
   const productIndex = productList.findIndex(
     (product) => product.uniqueId === updatedProduct.uniqueId
@@ -168,7 +186,7 @@ app.post('/changeList', (req, res) => {
 
 
   
-  app.get('/pizzas', (req, res) => {
+  app.get('/product', (req, res) => {
     const id = req.query.category;
   
     const filteredProducts = id ? productList.filter(product => product.id.includes(Number(id))) : productList;
