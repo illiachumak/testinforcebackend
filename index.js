@@ -15,7 +15,7 @@ app.use((req, res, next) => {
 
   const productList = [
     {
-      "index": 0,
+      "uniqueId": 0,
       "id": [0, 1],
       "img": "https://gymbeam.ua/media/catalog/product/cache/bf5a31e851f50f3ed6850cbbf183db11/p/e/peanut_butter_crunchy_340g.png",
       "name": "Peanut Butter1",
@@ -25,7 +25,7 @@ app.use((req, res, next) => {
       "price": 13.89,
     },
     {
-      "index": 1,
+      "uniqueId": 1,
       "id": [0, 2],
       "img": "https://gymbeam.ua/media/catalog/product/cache/bf5a31e851f50f3ed6850cbbf183db11/p/e/peanut_butter_crunchy_340g.png",
       "name": "Peanut Butter2",
@@ -40,7 +40,7 @@ app.use((req, res, next) => {
       "price": 12.99,
     },
     {
-      "index": 2,
+      "uniqueId": 2,
       "id": [0, 3],
       "img": "https://gymbeam.ua/media/catalog/product/cache/bf5a31e851f50f3ed6850cbbf183db11/p/e/peanut_butter_crunchy_340g.png",
       "name": "Peanut Butter3",
@@ -56,7 +56,7 @@ app.use((req, res, next) => {
     },
 
     {
-      "index": 4,
+      "uniqueId": 4,
       "id": [0, 4],
       "img": "https://gymbeam.ua/media/catalog/product/cache/bf5a31e851f50f3ed6850cbbf183db11/p/e/peanut_butter_crunchy_340g.png",
       "name": "Peanut Butter4",
@@ -71,7 +71,7 @@ app.use((req, res, next) => {
       "price": 20.99,
     },
     {
-      "index": 0,
+      "uniqueId": 5,
       "id": [0, 1],
       "img": "https://gymbeam.ua/media/catalog/product/cache/bf5a31e851f50f3ed6850cbbf183db11/p/e/peanut_butter_crunchy_340g.png",
       "name": "Peanut Butter5",
@@ -86,7 +86,7 @@ app.use((req, res, next) => {
       "price": 13.89,
     },
     {
-      "index": 1,
+      "uniqueId": 6,
       "id": [0, 2],
       "img": "https://gymbeam.ua/media/catalog/product/cache/bf5a31e851f50f3ed6850cbbf183db11/p/e/peanut_butter_crunchy_340g.png",
       "name": "Peanut Butter6",
@@ -101,7 +101,7 @@ app.use((req, res, next) => {
       "price": 12.99,
     },
     {
-      "index": 2,
+      "uniqueId": 7,
       "id": [0, 3],
       "img": "https://gymbeam.ua/media/catalog/product/cache/bf5a31e851f50f3ed6850cbbf183db11/p/e/peanut_butter_crunchy_340g.png",
       "name": "Peanut Butter7",
@@ -117,7 +117,7 @@ app.use((req, res, next) => {
     },
 
     {
-      "index": 4,
+      "uniqueId": 8,
       "id": [0, 4],
       "img": "https://gymbeam.ua/media/catalog/product/cache/bf5a31e851f50f3ed6850cbbf183db11/p/e/peanut_butter_crunchy_340g.png",
       "name": "Peanut Butter8",
@@ -144,8 +144,29 @@ const checkOutList = []
   app.post('/checkout', (req, res) => {
     checkOutList.push(req.body)
     console.log(req.body)
-    res.json("succes")
+    res.json("success")
   })
+
+
+app.post('/changeList', (req, res) => {
+  const updatedProduct = req.body;
+  const productIndex = productList.findIndex(
+    (product) => product.uniqueId === updatedProduct.uniqueId
+  );
+
+
+    productList.splice(productIndex, 1); 
+    productList.push(updatedProduct);
+
+
+
+ 
+  res.sendStatus(200); 
+});
+
+
+
+
   
   app.get('/pizzas', (req, res) => {
     const id = req.query.category;
